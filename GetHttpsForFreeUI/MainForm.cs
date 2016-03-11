@@ -88,41 +88,52 @@ namespace GetHttpsForFreeUI
 
         private void btnOpenSSLExecute_Click(object sender, EventArgs e)
         {
-            string tmpPath = Path.Combine(tbPath.Text, "tmp");
-
-            // Create a clean dir
-            if (Directory.Exists(tmpPath))
-                Directory.Delete(tmpPath, true);
-
-            Directory.CreateDirectory(tmpPath);
-
-            string accountKey = Path.Combine(tbPath.Text, tbAccountKey.Text);
-            string openSSLPath = tbOpenSSLPath.Text;
-
-            // Create batch file with contents
-            string rawCommand = tbOpenSSLData.Text;
-            string winCommand = rawCommand.Replace(@"PRIV_KEY=./account.key; echo -n ", @"echo|set /p=").Replace("openssl", "\"" + openSSLPath + "\"").Replace("$PRIV_KEY", "\""+accountKey+ "\"");
-
-            var batFileFullPath = Path.Combine(tmpPath, "run.bat");
-            CreateFileWithContents(batFileFullPath, winCommand);
-
-            string rawResults = RunExternalExe(batFileFullPath);
-
-            // If the command is first
-            var idx = rawResults.IndexOf(accountKey);
-            if (idx != -1)
+            try
             {
-                rawResults = rawResults.Substring(idx + accountKey.Length+1).Trim();
+                string tmpPath = Path.Combine(tbPath.Text, "tmp");
+
+                // Create a clean dir
+                if (Directory.Exists(tmpPath))
+                    Directory.Delete(tmpPath, true);
+
+                Directory.CreateDirectory(tmpPath);
+
+                string accountKey = Path.Combine(tbPath.Text, tbAccountKey.Text);
+                string openSSLPath = tbOpenSSLPath.Text;
+
+                // Create batch file with contents
+                string rawCommand = tbOpenSSLData.Text;
+                string winCommand = rawCommand.Replace(@"PRIV_KEY=./account.key; echo -n ", @"echo|set /p=").Replace("openssl", "\"" + openSSLPath + "\"").Replace("$PRIV_KEY", "\""+accountKey+ "\"");
+
+                var batFileFullPath = Path.Combine(tmpPath, "run.bat");
+                CreateFileWithContents(batFileFullPath, winCommand);
+
+                string rawResults = RunExternalExe(batFileFullPath);
+
+                // If the command is first
+                var idx = rawResults.IndexOf(accountKey);
+                if (idx != -1)
+                {
+                    rawResults = rawResults.Substring(idx + accountKey.Length+1).Trim();
+                }
+
+                string winResults = "(stdin)= " + rawResults.Replace(Environment.NewLine, "");
+
+                tbOpenSSLResults.Text = winResults;
+                Clipboard.SetText(winResults);
+
+                // Clear out the other boxes so nothing gets confused
+                tbFileContents.Text = string.Empty;
+                tbFileServerPath.Text = string.Empty;
+
+                picOpenSSLExecStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
+                lblOpenSSLExecStatus.Text = "Success";
             }
-
-            string winResults = "(stdin)= " + rawResults.Replace(Environment.NewLine, "");
-
-            tbOpenSSLResults.Text = winResults;
-            Clipboard.SetText(winResults);
-
-            // Clear out the other boxes so nothing gets confused
-            tbFileContents.Text = string.Empty;
-            tbFileServerPath.Text = string.Empty;
+            catch (Exception ex)
+            {
+                picOpenSSLExecStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
+                lblOpenSSLExecStatus.Text = "Error "+ex.Message;
+            }
         }
 
         private void tbOpenSSLData_Click(object sender, EventArgs e)
@@ -137,23 +148,34 @@ namespace GetHttpsForFreeUI
 
         private void btnCreateVerificationFile_Click(object sender, EventArgs e)
         {
-            string tmpPath = Path.Combine(tbPath.Text, "files");
+            try
+            {
+                string tmpPath = Path.Combine(tbPath.Text, "files");
             
-            // Create a clean dir
-            if (Directory.Exists(tmpPath))
-                Directory.Delete(tmpPath, true);
+                // Create a clean dir
+                if (Directory.Exists(tmpPath))
+                    Directory.Delete(tmpPath, true);
 
-            Directory.CreateDirectory(tmpPath);
+                Directory.CreateDirectory(tmpPath);
 
-            string rawUrl = tbFileServerPath.Text;
-            Uri url = new Uri(rawUrl, UriKind.Absolute);
+                string rawUrl = tbFileServerPath.Text;
+                Uri url = new Uri(rawUrl, UriKind.Absolute);
 
-            string fullFilePath = Path.Combine(tmpPath, url.AbsolutePath.TrimStart('/').Replace('/','\\'));
-            Directory.CreateDirectory(Path.GetDirectoryName(fullFilePath));
+                string fullFilePath = Path.Combine(tmpPath, url.AbsolutePath.TrimStart('/').Replace('/','\\'));
+                Directory.CreateDirectory(Path.GetDirectoryName(fullFilePath));
 
-            CreateFileWithContents(fullFilePath, tbFileContents.Text);
+                CreateFileWithContents(fullFilePath, tbFileContents.Text);
 
-            Process.Start(tmpPath);
+                Process.Start(tmpPath);
+
+                picVerificationFileStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
+                lblVerificationFileStatus.Text = "Success";
+            }
+            catch (Exception ex)
+            {
+                picVerificationFileStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
+                lblVerificationFileStatus.Text = "Error "+ex.Message;
+            }
         }
 
         private void tbFileServerPath_Click(object sender, EventArgs e)
@@ -182,6 +204,8 @@ namespace GetHttpsForFreeUI
             CreateFileWithContents(chainFile, tbCertIntermediate.Text.Trim()+Environment.NewLine+tbCertRoot.Text.Trim());
 
             Process.Start(rootDir);
+
+            ValidateTabPage3();
         }
 
         private void tbCertSigned_Click(object sender, EventArgs e)
@@ -230,6 +254,8 @@ namespace GetHttpsForFreeUI
 
             tbAccountKeyContents.Text = rawKeyData;
             Clipboard.SetText(rawKeyData);
+
+            ValidateTabPage1AccountKey();
         }
 
         private void tbAccountKeyContents_Click(object sender, EventArgs e)
@@ -274,6 +300,148 @@ namespace GetHttpsForFreeUI
 
             tbCertSigningRequestContents.Text = rawKeyData;
             Clipboard.SetText(rawKeyData);
+
+            ValidateTabPage1DomainKey();
+        }
+
+        private void btnShowHelp_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            btnShowHelp.Text = (splitContainer1.Panel1Collapsed ? "Show" : "Hide" ) + " Help";
+        }
+
+        private void lnkWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(lnkWebsite.Text);
+        }
+
+        private void lnkGetOpenSSL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://wiki.openssl.org/index.php/Binaries");
+        }
+
+        private void lnkGetOpenSSLcnfTemplateFile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://web.mit.edu/crypto/openssl.cnf");
+        }
+
+        #region Validation for Tab values and settings
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabSetup)
+                ValidateSetupTab();
+            else if (tabControl1.SelectedTab == tabPage1)
+                ValidateTabPage1();
+            else if (tabControl1.SelectedTab == tabPage2)
+                ValidateTabPage2();
+            else if (tabControl1.SelectedTab == tabPage3)
+                ValidateTabPage3();
+        }
+
+        private void ValidateTabPage2()
+        {
+            // Initialize the tab page
+            picOpenSSLExecStatus.Image = null;
+            lblOpenSSLExecStatus.Text = null;
+            picVerificationFileStatus.Image = null;
+            lblVerificationFileStatus.Text = null;
+        }
+
+        private void ValidateSetupTab()
+        {
+            picOKOpenSSL.Image = File.Exists(tbOpenSSLPath.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+            picOKWorkingPath.Image = Directory.Exists(tbPath.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+            picOKCertificateCreationFile.Image = File.Exists(Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text)) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+
+            picOKAccountKey.Image = !string.IsNullOrWhiteSpace(tbAccountKey.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+            picOKDomainKey.Image = !string.IsNullOrWhiteSpace(tbDomainKey.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+        }
+
+        private void ValidateTabPage1()
+        {
+            ValidateTabPage1AccountKey();
+            ValidateTabPage1DomainKey();
+        }
+
+        private void ValidateTabPage1AccountKey()
+        {
+            string accountKeyPath = Path.Combine(tbPath.Text, tbAccountKey.Text);
+            picAccountKeyStatus.Image = null;
+            lblAccountKeyStatus.Text = null;
+            if (File.Exists(accountKeyPath))
+            {
+                picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
+                lblAccountKeyStatus.Text = $"Account key '{accountKeyPath}' already exists";
+            }
+            else
+            {
+                picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
+                lblAccountKeyStatus.Text = $"No Account key has been created yet";
+            }
+        }
+
+        private void ValidateTabPage1DomainKey()
+        {
+            string domainKeyPath = Path.Combine(tbPath.Text, tbDomainKey.Text);
+            picDomainKeyStatus.Image = null;
+            lblDomainKeyStatus.Text = null;
+            if (File.Exists(domainKeyPath))
+            {
+                picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
+                lblDomainKeyStatus.Text = $"Domain key '{domainKeyPath}' already exists";
+            }
+            else
+            {
+                picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
+                lblDomainKeyStatus.Text = $"No Domain key has been created yet";
+            }
+        }
+
+        private void ValidateTabPage3()
+        {
+            var rootDir = tbPath.Text;
+            string prefix = Path.GetFileName(rootDir);
+            string certFile = Path.Combine(rootDir, prefix + "_cert.crt");
+            string chainFile = Path.Combine(rootDir, prefix + "_chain.crt");
+
+
+            picAccountKeyStatus.Image = null;
+            lblAccountKeyStatus.Text = null;
+            if (File.Exists(certFile) && File.Exists(chainFile))
+            {
+                picCertificateFileStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
+                lblCertificateFileStatus.Text = $"Chain and Cert files both exist at '{rootDir}'";
+            }
+            else
+            {
+                picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
+                if (!File.Exists(certFile))
+                    lblAccountKeyStatus.Text = $"Cert file '{certFile}' could not be found. Re-create files.";
+                else
+                    lblAccountKeyStatus.Text = $"Chain file '{chainFile}' could not be found. Re-create files.";
+            }
+        }
+
+        
+
+        private void tbOpenSSLData_TextChanged(object sender, EventArgs e)
+        {
+            picOpenSSLExecStatus.Image = null;
+            lblOpenSSLExecStatus.Text = null;
+        }
+
+        private void tbFileServerPath_TextChanged(object sender, EventArgs e)
+        {
+            picVerificationFileStatus.Image = null;
+            lblVerificationFileStatus.Text = null;
+        }
+        
+        #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            ValidateSetupTab();
         }
     }
 }
