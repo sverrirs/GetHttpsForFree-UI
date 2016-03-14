@@ -19,6 +19,11 @@ namespace GetHttpsForFreeUI
             InitializeComponent();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            ValidateSetupTab();
+        }
+
         public static void CreateFileWithContents(string filePath, string contents)
         {
             if (File.Exists(filePath))
@@ -193,11 +198,6 @@ namespace GetHttpsForFreeUI
             tbFileContents.SelectAll();
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCreateCertificateFiles_Click(object sender, EventArgs e)
         {
             var rootDir = tbPath.Text;
@@ -222,12 +222,7 @@ namespace GetHttpsForFreeUI
         {
             tbCertIntermediate.SelectAll();
         }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void btnCreateAccountKey_Click(object sender, EventArgs e)
         {
             string tmpPath = Path.Combine(tbPath.Text, "tmp");
@@ -470,7 +465,7 @@ namespace GetHttpsForFreeUI
             }
         }
 
-        
+        #endregion
 
         private void tbOpenSSLData_TextChanged(object sender, EventArgs e)
         {
@@ -484,13 +479,6 @@ namespace GetHttpsForFreeUI
             lblVerificationFileStatus.Text = null;
         }
         
-        #endregion
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            ValidateSetupTab();
-        }
-
         private void cbUnlockAccountKey_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUnlockAccountKey.Checked)
@@ -562,6 +550,15 @@ namespace GetHttpsForFreeUI
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/sverrirs/GetHttpsForFree-UI");
+        }
+
+        private void lnkVerifyDomainVerificationFilesOnServer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var urlText = tbFileServerPath.Text;
+            if (string.IsNullOrWhiteSpace(urlText))
+                return;
+
+            Process.Start(urlText);
         }
     }
 }

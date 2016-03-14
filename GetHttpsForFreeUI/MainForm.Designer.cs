@@ -60,25 +60,27 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSetup = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbAccountKey = new System.Windows.Forms.TextBox();
+            this.tbDomainKey = new System.Windows.Forms.TextBox();
+            this.lnkGetOpenSSLcnfTemplateFile = new System.Windows.Forms.LinkLabel();
+            this.tbOpenSSLCertCreationFile = new System.Windows.Forms.TextBox();
+            this.picOKAccountKey = new System.Windows.Forms.PictureBox();
+            this.picOKDomainKey = new System.Windows.Forms.PictureBox();
+            this.picOKCertificateCreationFile = new System.Windows.Forms.PictureBox();
             this.btnBrowsePathWorkingPath = new System.Windows.Forms.Button();
             this.btnBrowsePathOpenSSL = new System.Windows.Forms.Button();
             this.tbCertRoot = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.lnkGetOpenSSLcnfTemplateFile = new System.Windows.Forms.LinkLabel();
             this.lnkGetOpenSSL = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.lnkWebsite = new System.Windows.Forms.LinkLabel();
             this.btnShowHelp = new System.Windows.Forms.Button();
-            this.picOKCertificateCreationFile = new System.Windows.Forms.PictureBox();
-            this.picOKDomainKey = new System.Windows.Forms.PictureBox();
-            this.picOKAccountKey = new System.Windows.Forms.PictureBox();
             this.picOKWorkingPath = new System.Windows.Forms.PictureBox();
             this.picOKOpenSSL = new System.Windows.Forms.PictureBox();
-            this.tbOpenSSLCertCreationFile = new System.Windows.Forms.TextBox();
-            this.tbDomainKey = new System.Windows.Forms.TextBox();
-            this.tbAccountKey = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbUnlockDomainKey = new System.Windows.Forms.CheckBox();
@@ -97,8 +99,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.wbHelpSystem = new System.Windows.Forms.WebBrowser();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.lnkVerifyDomainVerificationFilesOnServer = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenSSLExecStatus)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -107,9 +108,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCertificateFileStatus)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabSetup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOKCertificateCreationFile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOKDomainKey)).BeginInit();
+            this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOKAccountKey)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOKDomainKey)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOKCertificateCreationFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOKWorkingPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOKOpenSSL)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -123,7 +125,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbOpenSSLData
@@ -235,6 +236,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.lnkVerifyDomainVerificationFilesOnServer);
             this.groupBox2.Controls.Add(this.lblVerificationFileStatus);
             this.groupBox2.Controls.Add(this.picVerificationFileStatus);
             this.groupBox2.Controls.Add(this.btnCreateVerificationFile);
@@ -244,7 +246,7 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(6, 366);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(675, 142);
+            this.groupBox2.Size = new System.Drawing.Size(675, 160);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Create Verification Files";
@@ -416,7 +418,6 @@
             this.label7.Size = new System.Drawing.Size(115, 13);
             this.label7.TabIndex = 3;
             this.label7.Text = "Intermediate Certificate";
-            this.label7.Click += new System.EventHandler(this.label6_Click);
             // 
             // label6
             // 
@@ -426,7 +427,6 @@
             this.label6.Size = new System.Drawing.Size(90, 13);
             this.label6.TabIndex = 3;
             this.label6.Text = "Signed Certificate";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // tabControl1
             // 
@@ -466,6 +466,119 @@
             this.tabSetup.TabIndex = 3;
             this.tabSetup.Text = "Setup";
             this.tabSetup.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.tbAccountKey);
+            this.groupBox6.Controls.Add(this.tbDomainKey);
+            this.groupBox6.Controls.Add(this.lnkGetOpenSSLcnfTemplateFile);
+            this.groupBox6.Controls.Add(this.tbOpenSSLCertCreationFile);
+            this.groupBox6.Controls.Add(this.picOKAccountKey);
+            this.groupBox6.Controls.Add(this.picOKDomainKey);
+            this.groupBox6.Controls.Add(this.picOKCertificateCreationFile);
+            this.groupBox6.Location = new System.Drawing.Point(31, 109);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(598, 148);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Files that must exist or will be created in Working Path";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(28, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(226, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Name for Account key (usually \"account.key\")";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(28, 59);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(217, 13);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Name for Domain key (usually \"domain.key\")";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(28, 98);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(272, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "OpenSSL Certificate Creation File (usually \"openssl.cnf\")";
+            // 
+            // tbAccountKey
+            // 
+            this.tbAccountKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAccountKey.Location = new System.Drawing.Point(31, 36);
+            this.tbAccountKey.Name = "tbAccountKey";
+            this.tbAccountKey.Size = new System.Drawing.Size(561, 20);
+            this.tbAccountKey.TabIndex = 3;
+            this.tbAccountKey.Text = "account.key";
+            // 
+            // tbDomainKey
+            // 
+            this.tbDomainKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDomainKey.Location = new System.Drawing.Point(31, 75);
+            this.tbDomainKey.Name = "tbDomainKey";
+            this.tbDomainKey.Size = new System.Drawing.Size(561, 20);
+            this.tbDomainKey.TabIndex = 4;
+            this.tbDomainKey.Text = "domain.key";
+            // 
+            // lnkGetOpenSSLcnfTemplateFile
+            // 
+            this.lnkGetOpenSSLcnfTemplateFile.AutoSize = true;
+            this.lnkGetOpenSSLcnfTemplateFile.Location = new System.Drawing.Point(307, 98);
+            this.lnkGetOpenSSLcnfTemplateFile.Name = "lnkGetOpenSSLcnfTemplateFile";
+            this.lnkGetOpenSSLcnfTemplateFile.Size = new System.Drawing.Size(196, 13);
+            this.lnkGetOpenSSLcnfTemplateFile.TabIndex = 5;
+            this.lnkGetOpenSSLcnfTemplateFile.TabStop = true;
+            this.lnkGetOpenSSLcnfTemplateFile.Text = "Download an OpenSSL.cnf template file";
+            this.lnkGetOpenSSLcnfTemplateFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetOpenSSLcnfTemplateFile_LinkClicked);
+            // 
+            // tbOpenSSLCertCreationFile
+            // 
+            this.tbOpenSSLCertCreationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbOpenSSLCertCreationFile.Location = new System.Drawing.Point(31, 114);
+            this.tbOpenSSLCertCreationFile.Name = "tbOpenSSLCertCreationFile";
+            this.tbOpenSSLCertCreationFile.Size = new System.Drawing.Size(561, 20);
+            this.tbOpenSSLCertCreationFile.TabIndex = 6;
+            this.tbOpenSSLCertCreationFile.Text = "openssl.cnf";
+            // 
+            // picOKAccountKey
+            // 
+            this.picOKAccountKey.Location = new System.Drawing.Point(6, 39);
+            this.picOKAccountKey.Name = "picOKAccountKey";
+            this.picOKAccountKey.Size = new System.Drawing.Size(16, 16);
+            this.picOKAccountKey.TabIndex = 3;
+            this.picOKAccountKey.TabStop = false;
+            // 
+            // picOKDomainKey
+            // 
+            this.picOKDomainKey.Location = new System.Drawing.Point(6, 76);
+            this.picOKDomainKey.Name = "picOKDomainKey";
+            this.picOKDomainKey.Size = new System.Drawing.Size(16, 16);
+            this.picOKDomainKey.TabIndex = 3;
+            this.picOKDomainKey.TabStop = false;
+            // 
+            // picOKCertificateCreationFile
+            // 
+            this.picOKCertificateCreationFile.Location = new System.Drawing.Point(6, 115);
+            this.picOKCertificateCreationFile.Name = "picOKCertificateCreationFile";
+            this.picOKCertificateCreationFile.Size = new System.Drawing.Size(16, 16);
+            this.picOKCertificateCreationFile.TabIndex = 3;
+            this.picOKCertificateCreationFile.TabStop = false;
             // 
             // btnBrowsePathWorkingPath
             // 
@@ -510,17 +623,6 @@
             this.label8.TabIndex = 8;
             this.label8.Text = "LetsEncrypt Root Certificate";
             // 
-            // lnkGetOpenSSLcnfTemplateFile
-            // 
-            this.lnkGetOpenSSLcnfTemplateFile.AutoSize = true;
-            this.lnkGetOpenSSLcnfTemplateFile.Location = new System.Drawing.Point(307, 98);
-            this.lnkGetOpenSSLcnfTemplateFile.Name = "lnkGetOpenSSLcnfTemplateFile";
-            this.lnkGetOpenSSLcnfTemplateFile.Size = new System.Drawing.Size(196, 13);
-            this.lnkGetOpenSSLcnfTemplateFile.TabIndex = 5;
-            this.lnkGetOpenSSLcnfTemplateFile.TabStop = true;
-            this.lnkGetOpenSSLcnfTemplateFile.Text = "Download an OpenSSL.cnf template file";
-            this.lnkGetOpenSSLcnfTemplateFile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetOpenSSLcnfTemplateFile_LinkClicked);
-            // 
             // lnkGetOpenSSL
             // 
             this.lnkGetOpenSSL.AutoSize = true;
@@ -531,6 +633,18 @@
             this.lnkGetOpenSSL.TabStop = true;
             this.lnkGetOpenSSL.Text = "Get OpenSSL for Windows";
             this.lnkGetOpenSSL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGetOpenSSL_LinkClicked);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(466, 807);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(68, 13);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "App Website";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // lnkWebsite
             // 
@@ -556,30 +670,6 @@
             this.btnShowHelp.Visible = false;
             this.btnShowHelp.Click += new System.EventHandler(this.btnShowHelp_Click);
             // 
-            // picOKCertificateCreationFile
-            // 
-            this.picOKCertificateCreationFile.Location = new System.Drawing.Point(6, 115);
-            this.picOKCertificateCreationFile.Name = "picOKCertificateCreationFile";
-            this.picOKCertificateCreationFile.Size = new System.Drawing.Size(16, 16);
-            this.picOKCertificateCreationFile.TabIndex = 3;
-            this.picOKCertificateCreationFile.TabStop = false;
-            // 
-            // picOKDomainKey
-            // 
-            this.picOKDomainKey.Location = new System.Drawing.Point(6, 76);
-            this.picOKDomainKey.Name = "picOKDomainKey";
-            this.picOKDomainKey.Size = new System.Drawing.Size(16, 16);
-            this.picOKDomainKey.TabIndex = 3;
-            this.picOKDomainKey.TabStop = false;
-            // 
-            // picOKAccountKey
-            // 
-            this.picOKAccountKey.Location = new System.Drawing.Point(6, 39);
-            this.picOKAccountKey.Name = "picOKAccountKey";
-            this.picOKAccountKey.Size = new System.Drawing.Size(16, 16);
-            this.picOKAccountKey.TabIndex = 3;
-            this.picOKAccountKey.TabStop = false;
-            // 
             // picOKWorkingPath
             // 
             this.picOKWorkingPath.Location = new System.Drawing.Point(6, 85);
@@ -595,65 +685,6 @@
             this.picOKOpenSSL.Size = new System.Drawing.Size(16, 16);
             this.picOKOpenSSL.TabIndex = 3;
             this.picOKOpenSSL.TabStop = false;
-            // 
-            // tbOpenSSLCertCreationFile
-            // 
-            this.tbOpenSSLCertCreationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbOpenSSLCertCreationFile.Location = new System.Drawing.Point(31, 114);
-            this.tbOpenSSLCertCreationFile.Name = "tbOpenSSLCertCreationFile";
-            this.tbOpenSSLCertCreationFile.Size = new System.Drawing.Size(561, 20);
-            this.tbOpenSSLCertCreationFile.TabIndex = 6;
-            this.tbOpenSSLCertCreationFile.Text = "openssl.cnf";
-            // 
-            // tbDomainKey
-            // 
-            this.tbDomainKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDomainKey.Location = new System.Drawing.Point(31, 75);
-            this.tbDomainKey.Name = "tbDomainKey";
-            this.tbDomainKey.Size = new System.Drawing.Size(561, 20);
-            this.tbDomainKey.TabIndex = 4;
-            this.tbDomainKey.Text = "domain.key";
-            // 
-            // tbAccountKey
-            // 
-            this.tbAccountKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAccountKey.Location = new System.Drawing.Point(31, 36);
-            this.tbAccountKey.Name = "tbAccountKey";
-            this.tbAccountKey.Size = new System.Drawing.Size(561, 20);
-            this.tbAccountKey.TabIndex = 3;
-            this.tbAccountKey.Text = "account.key";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(28, 98);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(272, 13);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "OpenSSL Certificate Creation File (usually \"openssl.cnf\")";
-            this.label11.Click += new System.EventHandler(this.label10_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(28, 59);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(217, 13);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Name for Domain key (usually \"domain.key\")";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(28, 20);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(226, 13);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Name for Account key (usually \"account.key\")";
             // 
             // tabPage1
             // 
@@ -694,6 +725,7 @@
             this.cbUnlockDomainKey.Text = "Unlock";
             this.mainToolTip.SetToolTip(this.cbUnlockDomainKey, "Tick to unlock the existing domain key to overwrite. Danger!");
             this.cbUnlockDomainKey.UseVisualStyleBackColor = true;
+            this.cbUnlockDomainKey.CheckedChanged += new System.EventHandler(this.cbUnlockDomainKey_CheckedChanged);
             // 
             // lblDomainKeyStatus
             // 
@@ -854,38 +886,16 @@
             this.wbHelpSystem.Size = new System.Drawing.Size(243, 100);
             this.wbHelpSystem.TabIndex = 0;
             // 
-            // groupBox6
+            // lnkVerifyDomainVerificationFilesOnServer
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.Controls.Add(this.label9);
-            this.groupBox6.Controls.Add(this.label10);
-            this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Controls.Add(this.tbAccountKey);
-            this.groupBox6.Controls.Add(this.tbDomainKey);
-            this.groupBox6.Controls.Add(this.lnkGetOpenSSLcnfTemplateFile);
-            this.groupBox6.Controls.Add(this.tbOpenSSLCertCreationFile);
-            this.groupBox6.Controls.Add(this.picOKAccountKey);
-            this.groupBox6.Controls.Add(this.picOKDomainKey);
-            this.groupBox6.Controls.Add(this.picOKCertificateCreationFile);
-            this.groupBox6.Location = new System.Drawing.Point(31, 109);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(598, 148);
-            this.groupBox6.TabIndex = 11;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Files that must exist or will be created in Working Path";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(466, 807);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(68, 13);
-            this.linkLabel1.TabIndex = 8;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "App Website";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.lnkVerifyDomainVerificationFilesOnServer.AutoSize = true;
+            this.lnkVerifyDomainVerificationFilesOnServer.Location = new System.Drawing.Point(9, 136);
+            this.lnkVerifyDomainVerificationFilesOnServer.Name = "lnkVerifyDomainVerificationFilesOnServer";
+            this.lnkVerifyDomainVerificationFilesOnServer.Size = new System.Drawing.Size(187, 13);
+            this.lnkVerifyDomainVerificationFilesOnServer.TabIndex = 8;
+            this.lnkVerifyDomainVerificationFilesOnServer.TabStop = true;
+            this.lnkVerifyDomainVerificationFilesOnServer.Text = "Verify link (after copying files to server)";
+            this.lnkVerifyDomainVerificationFilesOnServer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkVerifyDomainVerificationFilesOnServer_LinkClicked);
             // 
             // MainForm
             // 
@@ -909,9 +919,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabSetup.ResumeLayout(false);
             this.tabSetup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOKCertificateCreationFile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOKDomainKey)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOKAccountKey)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOKDomainKey)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOKCertificateCreationFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOKWorkingPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picOKOpenSSL)).EndInit();
             this.tabPage1.ResumeLayout(false);
@@ -927,8 +939,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1004,6 +1014,7 @@
         private System.Windows.Forms.Button btnBrowsePathWorkingPath;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel lnkVerifyDomainVerificationFilesOnServer;
     }
 }
 
