@@ -24,6 +24,11 @@ namespace GetHttpsForFreeUI
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
+            // Create the directory
+            var directoryPath = Path.GetDirectoryName(filePath);
+            if( !string.IsNullOrWhiteSpace(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
             using (StreamWriter w = new StreamWriter(filePath))
             {
                 w.Write(contents);
@@ -241,16 +246,7 @@ namespace GetHttpsForFreeUI
             CreateFileWithContents(batFileFullPath, winCommand);
             RunExternalExe(batFileFullPath);
 
-            winCommand = "\"" + openSSLPath + "\" rsa -in \"" + accountKey + "\" -pubout";
-            CreateFileWithContents(batFileFullPath, winCommand);
-            string rawKeyData = RunExternalExe(batFileFullPath);
-
-            // If the command is first
-            var idx = rawKeyData.IndexOf(winCommand);
-            if (idx != -1)
-            {
-                rawKeyData = rawKeyData.Substring(idx + winCommand.Length + 1).Trim();
-            }
+            string rawKeyData = GetKeyFileContents(accountKey);
 
             tbAccountKeyContents.Text = rawKeyData;
             Clipboard.SetText(rawKeyData);
@@ -287,7 +283,40 @@ namespace GetHttpsForFreeUI
             CreateFileWithContents(batFileFullPath, winCommand);
             RunExternalExe(batFileFullPath);
 
-            winCommand = "\"" + openSSLPath + "\" req -new -sha256 -key \"" + domainKey + "\" -subj \"/\" -reqexts SAN -config \""+ certSignFile+"\"";
+            string rawCertData = GetCertificateSigningRequest(domainKey, certSignFile);
+            tbCertSigningRequestContents.Text = rawCertData;
+            Clipboard.SetText(rawCertData);
+
+            ValidateTabPage1DomainKey();
+        }
+
+        private string GetCertificateSigningRequest(string keyFilePath, string certSignFilePath)
+        {
+            string openSSLPath = tbOpenSSLPath.Text;
+            string tmpPath = Path.Combine(tbPath.Text, "tmp");
+            var batFileFullPath = Path.Combine(tmpPath, "run.bat");
+
+            string winCommand = "\"" + openSSLPath + "\" req -new -sha256 -key \"" + keyFilePath + "\" -subj \"/\" -reqexts SAN -config \"" + certSignFilePath + "\"";
+            CreateFileWithContents(batFileFullPath, winCommand);
+            string rawOutputData = RunExternalExe(batFileFullPath);
+
+            // If the command is first
+            var idx = rawOutputData.IndexOf(winCommand);
+            if (idx != -1)
+            {
+                rawOutputData = rawOutputData.Substring(idx + winCommand.Length + 1).Trim();
+            }
+
+            return rawOutputData;
+        }
+
+        private string GetKeyFileContents( string keyFileName )
+        {
+            string openSSLPath = tbOpenSSLPath.Text;
+            string tmpPath = Path.Combine(tbPath.Text, "tmp");
+            var batFileFullPath = Path.Combine(tmpPath, "run.bat");
+
+            string winCommand = "\"" + openSSLPath + "\" rsa -in \"" + keyFileName + "\" -pubout";
             CreateFileWithContents(batFileFullPath, winCommand);
             string rawKeyData = RunExternalExe(batFileFullPath);
 
@@ -297,11 +326,7 @@ namespace GetHttpsForFreeUI
             {
                 rawKeyData = rawKeyData.Substring(idx + winCommand.Length + 1).Trim();
             }
-
-            tbCertSigningRequestContents.Text = rawKeyData;
-            Clipboard.SetText(rawKeyData);
-
-            ValidateTabPage1DomainKey();
+            return rawKeyData;
         }
 
         private void btnShowHelp_Click(object sender, EventArgs e)
@@ -373,28 +398,50 @@ namespace GetHttpsForFreeUI
             {
                 picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
                 lblAccountKeyStatus.Text = $"Account key '{accountKeyPath}' already exists";
+                btnCreateAccountKey.Enabled = false;
+
+                // Print the key in the box
+                if(string.IsNullOrWhiteSpace(tbAccountKeyContents.Text))
+                    tbAccountKeyContents.Text = GetKeyFileContents(accountKeyPath);
             }
             else
             {
                 picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
                 lblAccountKeyStatus.Text = $"No Account key has been created yet";
+                btnCreateAccountKey.Enabled = true;
             }
         }
 
         private void ValidateTabPage1DomainKey()
         {
+            string certSignFile = Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text);
             string domainKeyPath = Path.Combine(tbPath.Text, tbDomainKey.Text);
+
             picDomainKeyStatus.Image = null;
             lblDomainKeyStatus.Text = null;
-            if (File.Exists(domainKeyPath))
+            if (File.Exists(domainKeyPath) && File.Exists(certSignFile))
             {
                 picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
                 lblDomainKeyStatus.Text = $"Domain key '{domainKeyPath}' already exists";
+                btnCreateDomainKey.Enabled = false;
+
+                // Print the key in the box                
+                if (string.IsNullOrWhiteSpace(tbCertSigningRequestContents.Text))
+                    tbCertSigningRequestContents.Text = GetCertificateSigningRequest(domainKeyPath, certSignFile);
             }
             else
             {
                 picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
-                lblDomainKeyStatus.Text = $"No Domain key has been created yet";
+                if (!File.Exists(certSignFile))
+                {
+                    lblDomainKeyStatus.Text = $"No OpenSSL certificate creation file available (openssl.cnf)";
+                    btnCreateDomainKey.Enabled = false;
+                }
+                else if (!File.Exists(domainKeyPath))
+                {
+                    lblDomainKeyStatus.Text = $"No Domain key has been created yet";
+                    btnCreateDomainKey.Enabled = true;
+                }
             }
         }
 
@@ -442,6 +489,19 @@ namespace GetHttpsForFreeUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             ValidateSetupTab();
+        }
+
+        private void cbUnlockAccountKey_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbUnlockAccountKey.Checked)
+                btnCreateAccountKey.Enabled = true;
+            else
+                ValidateTabPage1AccountKey();
+        }
+
+        private void cbUnlockDomainKey_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
