@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GetHttpsForFreeUI.Properties;
 
 namespace GetHttpsForFreeUI
 {
@@ -370,12 +371,30 @@ namespace GetHttpsForFreeUI
 
         private void ValidateSetupTab()
         {
-            picOKOpenSSL.Image = File.Exists(tbOpenSSLPath.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
-            picOKWorkingPath.Image = Directory.Exists(tbPath.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+            // Load values from settings if nothing is set
+            if (string.IsNullOrWhiteSpace(tbOpenSSLPath.Text))
+                tbOpenSSLPath.Text = Settings.Default.OpenSSLPath;
+            if (string.IsNullOrWhiteSpace(tbPath.Text))
+                tbPath.Text = Settings.Default.LastWorkingPath;
+            
+            var openSSLPathExists = File.Exists(tbOpenSSLPath.Text);
+            var workingPathExists = Directory.Exists(tbPath.Text);
+
+            picOKOpenSSL.Image = openSSLPathExists ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+            picOKWorkingPath.Image = workingPathExists ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
             picOKCertificateCreationFile.Image = File.Exists(Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text)) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
 
             picOKAccountKey.Image = !string.IsNullOrWhiteSpace(tbAccountKey.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
             picOKDomainKey.Image = !string.IsNullOrWhiteSpace(tbDomainKey.Text) ? ResourceStream.GetImage(ResourceStream.Ok) : ResourceStream.GetImage(ResourceStream.Error);
+
+            // Save settings for next use
+            if (openSSLPathExists)
+                Settings.Default.OpenSSLPath = tbOpenSSLPath.Text;
+            if (workingPathExists)
+                Settings.Default.LastWorkingPath = tbPath.Text;
+
+            if(openSSLPathExists || workingPathExists)
+                Settings.Default.Save();
         }
 
         private void ValidateTabPage1()
@@ -404,6 +423,7 @@ namespace GetHttpsForFreeUI
                 picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
                 lblAccountKeyStatus.Text = $"No Account key has been created yet";
                 btnCreateAccountKey.Enabled = true;
+                tbAccountKeyContents.Text = string.Empty;
             }
         }
 
@@ -426,6 +446,7 @@ namespace GetHttpsForFreeUI
             }
             else
             {
+                tbCertSigningRequestContents.Text = string.Empty;
                 picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Warning);
                 if (!File.Exists(certSignFile))
                 {
@@ -523,16 +544,20 @@ namespace GetHttpsForFreeUI
                 CheckFileExists = false,
                 Multiselect = false,
                 ValidateNames = false,
-                FileName = fileNameToFind,
-                InitialDirectory = Path.GetDirectoryName(fileResultBox.Text ?? string.Empty)
+                FileName = fileNameToFind
             })
             {
+                // Load an initial path if possible
+                var initialPath = fileResultBox.Text ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(initialPath))
+                    dialog.InitialDirectory = Path.GetDirectoryName(initialPath);
+
                 var result = dialog.ShowDialog(this);
                 if (result != DialogResult.OK)
                     return;
 
                 string firstFile = dialog.FileNames?.FirstOrDefault() ?? string.Empty;
-                if(string.Equals(Path.GetFileName(firstFile), fileNameToFind, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(Path.GetFileName(firstFile), fileNameToFind, StringComparison.OrdinalIgnoreCase))
                     fileResultBox.Text = firstFile;
             }
         }
@@ -559,6 +584,16 @@ namespace GetHttpsForFreeUI
                 return;
 
             Process.Start(urlText);
+        }
+
+        private void tbOpenSSLPath_Leave(object sender, EventArgs e)
+        {
+            ValidateSetupTab();
+        }
+
+        private void tbPath_Leave(object sender, EventArgs e)
+        {
+            ValidateSetupTab();
         }
     }
 }

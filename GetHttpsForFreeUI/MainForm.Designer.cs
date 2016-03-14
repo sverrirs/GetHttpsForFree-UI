@@ -41,6 +41,7 @@
             this.lblOpenSSLExecStatus = new System.Windows.Forms.Label();
             this.picOpenSSLExecStatus = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lnkVerifyDomainVerificationFilesOnServer = new System.Windows.Forms.LinkLabel();
             this.lblVerificationFileStatus = new System.Windows.Forms.Label();
             this.picVerificationFileStatus = new System.Windows.Forms.PictureBox();
             this.btnCreateVerificationFile = new System.Windows.Forms.Button();
@@ -99,7 +100,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.wbHelpSystem = new System.Windows.Forms.WebBrowser();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.lnkVerifyDomainVerificationFilesOnServer = new System.Windows.Forms.LinkLabel();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenSSLExecStatus)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -147,7 +148,7 @@
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(598, 20);
             this.tbPath.TabIndex = 2;
-            this.tbPath.Text = "D:\\dev\\devtools\\openssl\\sverrirs_ssl";
+            this.tbPath.Leave += new System.EventHandler(this.tbPath_Leave);
             // 
             // lblPath
             // 
@@ -251,6 +252,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Create Verification Files";
             // 
+            // lnkVerifyDomainVerificationFilesOnServer
+            // 
+            this.lnkVerifyDomainVerificationFilesOnServer.AutoSize = true;
+            this.lnkVerifyDomainVerificationFilesOnServer.Location = new System.Drawing.Point(9, 136);
+            this.lnkVerifyDomainVerificationFilesOnServer.Name = "lnkVerifyDomainVerificationFilesOnServer";
+            this.lnkVerifyDomainVerificationFilesOnServer.Size = new System.Drawing.Size(187, 13);
+            this.lnkVerifyDomainVerificationFilesOnServer.TabIndex = 8;
+            this.lnkVerifyDomainVerificationFilesOnServer.TabStop = true;
+            this.lnkVerifyDomainVerificationFilesOnServer.Text = "Verify link (after copying files to server)";
+            this.lnkVerifyDomainVerificationFilesOnServer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkVerifyDomainVerificationFilesOnServer_LinkClicked);
+            // 
             // lblVerificationFileStatus
             // 
             this.lblVerificationFileStatus.AutoSize = true;
@@ -326,7 +338,7 @@
             this.tbOpenSSLPath.Name = "tbOpenSSLPath";
             this.tbOpenSSLPath.Size = new System.Drawing.Size(598, 20);
             this.tbOpenSSLPath.TabIndex = 1;
-            this.tbOpenSSLPath.Text = "D:\\dev\\devtools\\openssl\\openssl.exe";
+            this.tbOpenSSLPath.Leave += new System.EventHandler(this.tbOpenSSLPath_Leave);
             // 
             // label5
             // 
@@ -455,6 +467,7 @@
             this.tabSetup.Controls.Add(this.btnShowHelp);
             this.tabSetup.Controls.Add(this.picOKWorkingPath);
             this.tabSetup.Controls.Add(this.picOKOpenSSL);
+            this.tabSetup.Controls.Add(this.label12);
             this.tabSetup.Controls.Add(this.label5);
             this.tabSetup.Controls.Add(this.tbPath);
             this.tabSetup.Controls.Add(this.lblPath);
@@ -886,16 +899,15 @@
             this.wbHelpSystem.Size = new System.Drawing.Size(243, 100);
             this.wbHelpSystem.TabIndex = 0;
             // 
-            // lnkVerifyDomainVerificationFilesOnServer
+            // label12
             // 
-            this.lnkVerifyDomainVerificationFilesOnServer.AutoSize = true;
-            this.lnkVerifyDomainVerificationFilesOnServer.Location = new System.Drawing.Point(9, 136);
-            this.lnkVerifyDomainVerificationFilesOnServer.Name = "lnkVerifyDomainVerificationFilesOnServer";
-            this.lnkVerifyDomainVerificationFilesOnServer.Size = new System.Drawing.Size(187, 13);
-            this.lnkVerifyDomainVerificationFilesOnServer.TabIndex = 8;
-            this.lnkVerifyDomainVerificationFilesOnServer.TabStop = true;
-            this.lnkVerifyDomainVerificationFilesOnServer.Text = "Verify link (after copying files to server)";
-            this.lnkVerifyDomainVerificationFilesOnServer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkVerifyDomainVerificationFilesOnServer_LinkClicked);
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(244, 24);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(184, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "(try the indy.fulgan.com latest version)";
             // 
             // MainForm
             // 
@@ -1015,6 +1027,7 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel lnkVerifyDomainVerificationFilesOnServer;
+        private System.Windows.Forms.Label label12;
     }
 }
 

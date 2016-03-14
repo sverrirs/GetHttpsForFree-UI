@@ -22,5 +22,29 @@ namespace GetHttpsForFreeUI.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenSSLPath {
+            get {
+                return ((string)(this["OpenSSLPath"]));
+            }
+            set {
+                this["OpenSSLPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastWorkingPath {
+            get {
+                return ((string)(this["LastWorkingPath"]));
+            }
+            set {
+                this["LastWorkingPath"] = value;
+            }
+        }
     }
 }
