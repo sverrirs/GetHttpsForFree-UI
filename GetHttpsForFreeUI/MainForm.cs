@@ -501,7 +501,67 @@ namespace GetHttpsForFreeUI
 
         private void cbUnlockDomainKey_CheckedChanged(object sender, EventArgs e)
         {
+            if (cbUnlockAccountKey.Checked)
+                btnCreateDomainKey.Enabled = true;
+            else
+                ValidateTabPage1DomainKey();
+        }
 
+        private void ShowBrowsePathDialog(TextBox pathResultBox)
+        {
+            using (var dialog = new OpenFileDialog
+            {
+                CheckFileExists = false,
+                Multiselect = false,
+                ValidateNames = false,
+                FileName = "Select Folder",
+                InitialDirectory = pathResultBox.Text ?? string.Empty
+            })
+            {
+                var result = dialog.ShowDialog(this);
+                if (result != DialogResult.OK)
+                    return;
+
+                string firstDir = Path.GetDirectoryName(dialog.FileNames?.FirstOrDefault() ?? string.Empty);
+                if (Directory.Exists(firstDir))
+                    pathResultBox.Text = firstDir;
+            }
+        }
+
+        private void ShowBrowseFileDialog(TextBox fileResultBox, string fileNameToFind)
+        {
+            using (var dialog = new OpenFileDialog
+            {
+                CheckFileExists = false,
+                Multiselect = false,
+                ValidateNames = false,
+                FileName = fileNameToFind,
+                InitialDirectory = Path.GetDirectoryName(fileResultBox.Text ?? string.Empty)
+            })
+            {
+                var result = dialog.ShowDialog(this);
+                if (result != DialogResult.OK)
+                    return;
+
+                string firstFile = dialog.FileNames?.FirstOrDefault() ?? string.Empty;
+                if(string.Equals(Path.GetFileName(firstFile), fileNameToFind, StringComparison.OrdinalIgnoreCase))
+                    fileResultBox.Text = firstFile;
+            }
+        }
+
+        private void btnBrowsePathOpenSSL_Click(object sender, EventArgs e)
+        {
+            ShowBrowseFileDialog(tbOpenSSLPath, "openssl.exe");
+        }
+
+        private void btnBrowsePathWorkingPath_Click(object sender, EventArgs e)
+        {
+            ShowBrowsePathDialog(tbPath);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/sverrirs/GetHttpsForFree-UI");
         }
     }
 }

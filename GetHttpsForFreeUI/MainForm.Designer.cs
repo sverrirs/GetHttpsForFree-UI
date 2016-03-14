@@ -60,6 +60,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSetup = new System.Windows.Forms.TabPage();
+            this.btnBrowsePathWorkingPath = new System.Windows.Forms.Button();
+            this.btnBrowsePathOpenSSL = new System.Windows.Forms.Button();
             this.tbCertRoot = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.lnkGetOpenSSLcnfTemplateFile = new System.Windows.Forms.LinkLabel();
@@ -79,11 +81,13 @@
             this.label9 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cbUnlockDomainKey = new System.Windows.Forms.CheckBox();
             this.lblDomainKeyStatus = new System.Windows.Forms.Label();
             this.picDomainKeyStatus = new System.Windows.Forms.PictureBox();
             this.tbCertSigningRequestContents = new System.Windows.Forms.TextBox();
             this.btnCreateDomainKey = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbUnlockAccountKey = new System.Windows.Forms.CheckBox();
             this.lblAccountKeyStatus = new System.Windows.Forms.Label();
             this.picAccountKeyStatus = new System.Windows.Forms.PictureBox();
             this.tbAccountKeyContents = new System.Windows.Forms.TextBox();
@@ -93,8 +97,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.wbHelpSystem = new System.Windows.Forms.WebBrowser();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cbUnlockAccountKey = new System.Windows.Forms.CheckBox();
-            this.cbUnlockDomainKey = new System.Windows.Forms.CheckBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenSSLExecStatus)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -119,6 +123,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbOpenSSLData
@@ -139,7 +144,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPath.Location = new System.Drawing.Point(31, 82);
             this.tbPath.Name = "tbPath";
-            this.tbPath.Size = new System.Drawing.Size(642, 20);
+            this.tbPath.Size = new System.Drawing.Size(598, 20);
             this.tbPath.TabIndex = 2;
             this.tbPath.Text = "D:\\dev\\devtools\\openssl\\sverrirs_ssl";
             // 
@@ -317,7 +322,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbOpenSSLPath.Location = new System.Drawing.Point(31, 43);
             this.tbOpenSSLPath.Name = "tbOpenSSLPath";
-            this.tbOpenSSLPath.Size = new System.Drawing.Size(642, 20);
+            this.tbOpenSSLPath.Size = new System.Drawing.Size(598, 20);
             this.tbOpenSSLPath.TabIndex = 1;
             this.tbOpenSSLPath.Text = "D:\\dev\\devtools\\openssl\\openssl.exe";
             // 
@@ -439,25 +444,19 @@
             // 
             // tabSetup
             // 
+            this.tabSetup.Controls.Add(this.groupBox6);
+            this.tabSetup.Controls.Add(this.btnBrowsePathWorkingPath);
+            this.tabSetup.Controls.Add(this.btnBrowsePathOpenSSL);
             this.tabSetup.Controls.Add(this.tbCertRoot);
             this.tabSetup.Controls.Add(this.label8);
-            this.tabSetup.Controls.Add(this.lnkGetOpenSSLcnfTemplateFile);
             this.tabSetup.Controls.Add(this.lnkGetOpenSSL);
+            this.tabSetup.Controls.Add(this.linkLabel1);
             this.tabSetup.Controls.Add(this.lnkWebsite);
             this.tabSetup.Controls.Add(this.btnShowHelp);
-            this.tabSetup.Controls.Add(this.picOKCertificateCreationFile);
-            this.tabSetup.Controls.Add(this.picOKDomainKey);
-            this.tabSetup.Controls.Add(this.picOKAccountKey);
             this.tabSetup.Controls.Add(this.picOKWorkingPath);
             this.tabSetup.Controls.Add(this.picOKOpenSSL);
             this.tabSetup.Controls.Add(this.label5);
-            this.tabSetup.Controls.Add(this.tbOpenSSLCertCreationFile);
-            this.tabSetup.Controls.Add(this.tbDomainKey);
-            this.tabSetup.Controls.Add(this.tbAccountKey);
-            this.tabSetup.Controls.Add(this.label11);
             this.tabSetup.Controls.Add(this.tbPath);
-            this.tabSetup.Controls.Add(this.label10);
-            this.tabSetup.Controls.Add(this.label9);
             this.tabSetup.Controls.Add(this.lblPath);
             this.tabSetup.Controls.Add(this.tbOpenSSLPath);
             this.tabSetup.Location = new System.Drawing.Point(4, 22);
@@ -468,10 +467,32 @@
             this.tabSetup.Text = "Setup";
             this.tabSetup.UseVisualStyleBackColor = true;
             // 
+            // btnBrowsePathWorkingPath
+            // 
+            this.btnBrowsePathWorkingPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowsePathWorkingPath.Location = new System.Drawing.Point(635, 80);
+            this.btnBrowsePathWorkingPath.Name = "btnBrowsePathWorkingPath";
+            this.btnBrowsePathWorkingPath.Size = new System.Drawing.Size(37, 23);
+            this.btnBrowsePathWorkingPath.TabIndex = 10;
+            this.btnBrowsePathWorkingPath.Text = "...";
+            this.btnBrowsePathWorkingPath.UseVisualStyleBackColor = true;
+            this.btnBrowsePathWorkingPath.Click += new System.EventHandler(this.btnBrowsePathWorkingPath_Click);
+            // 
+            // btnBrowsePathOpenSSL
+            // 
+            this.btnBrowsePathOpenSSL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowsePathOpenSSL.Location = new System.Drawing.Point(635, 41);
+            this.btnBrowsePathOpenSSL.Name = "btnBrowsePathOpenSSL";
+            this.btnBrowsePathOpenSSL.Size = new System.Drawing.Size(37, 23);
+            this.btnBrowsePathOpenSSL.TabIndex = 10;
+            this.btnBrowsePathOpenSSL.Text = "...";
+            this.btnBrowsePathOpenSSL.UseVisualStyleBackColor = true;
+            this.btnBrowsePathOpenSSL.Click += new System.EventHandler(this.btnBrowsePathOpenSSL_Click);
+            // 
             // tbCertRoot
             // 
             this.tbCertRoot.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCertRoot.Location = new System.Drawing.Point(31, 269);
+            this.tbCertRoot.Location = new System.Drawing.Point(31, 285);
             this.tbCertRoot.Multiline = true;
             this.tbCertRoot.Name = "tbCertRoot";
             this.tbCertRoot.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -483,7 +504,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 253);
+            this.label8.Location = new System.Drawing.Point(28, 269);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(139, 13);
             this.label8.TabIndex = 8;
@@ -492,7 +513,7 @@
             // lnkGetOpenSSLcnfTemplateFile
             // 
             this.lnkGetOpenSSLcnfTemplateFile.AutoSize = true;
-            this.lnkGetOpenSSLcnfTemplateFile.Location = new System.Drawing.Point(307, 199);
+            this.lnkGetOpenSSLcnfTemplateFile.Location = new System.Drawing.Point(307, 98);
             this.lnkGetOpenSSLcnfTemplateFile.Name = "lnkGetOpenSSLcnfTemplateFile";
             this.lnkGetOpenSSLcnfTemplateFile.Size = new System.Drawing.Size(196, 13);
             this.lnkGetOpenSSLcnfTemplateFile.TabIndex = 5;
@@ -532,11 +553,12 @@
             this.btnShowHelp.TabIndex = 9;
             this.btnShowHelp.Text = "Show Help";
             this.btnShowHelp.UseVisualStyleBackColor = true;
+            this.btnShowHelp.Visible = false;
             this.btnShowHelp.Click += new System.EventHandler(this.btnShowHelp_Click);
             // 
             // picOKCertificateCreationFile
             // 
-            this.picOKCertificateCreationFile.Location = new System.Drawing.Point(6, 216);
+            this.picOKCertificateCreationFile.Location = new System.Drawing.Point(6, 115);
             this.picOKCertificateCreationFile.Name = "picOKCertificateCreationFile";
             this.picOKCertificateCreationFile.Size = new System.Drawing.Size(16, 16);
             this.picOKCertificateCreationFile.TabIndex = 3;
@@ -544,7 +566,7 @@
             // 
             // picOKDomainKey
             // 
-            this.picOKDomainKey.Location = new System.Drawing.Point(6, 177);
+            this.picOKDomainKey.Location = new System.Drawing.Point(6, 76);
             this.picOKDomainKey.Name = "picOKDomainKey";
             this.picOKDomainKey.Size = new System.Drawing.Size(16, 16);
             this.picOKDomainKey.TabIndex = 3;
@@ -552,7 +574,7 @@
             // 
             // picOKAccountKey
             // 
-            this.picOKAccountKey.Location = new System.Drawing.Point(6, 140);
+            this.picOKAccountKey.Location = new System.Drawing.Point(6, 39);
             this.picOKAccountKey.Name = "picOKAccountKey";
             this.picOKAccountKey.Size = new System.Drawing.Size(16, 16);
             this.picOKAccountKey.TabIndex = 3;
@@ -578,9 +600,9 @@
             // 
             this.tbOpenSSLCertCreationFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbOpenSSLCertCreationFile.Location = new System.Drawing.Point(31, 215);
+            this.tbOpenSSLCertCreationFile.Location = new System.Drawing.Point(31, 114);
             this.tbOpenSSLCertCreationFile.Name = "tbOpenSSLCertCreationFile";
-            this.tbOpenSSLCertCreationFile.Size = new System.Drawing.Size(642, 20);
+            this.tbOpenSSLCertCreationFile.Size = new System.Drawing.Size(561, 20);
             this.tbOpenSSLCertCreationFile.TabIndex = 6;
             this.tbOpenSSLCertCreationFile.Text = "openssl.cnf";
             // 
@@ -588,9 +610,9 @@
             // 
             this.tbDomainKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDomainKey.Location = new System.Drawing.Point(31, 176);
+            this.tbDomainKey.Location = new System.Drawing.Point(31, 75);
             this.tbDomainKey.Name = "tbDomainKey";
-            this.tbDomainKey.Size = new System.Drawing.Size(642, 20);
+            this.tbDomainKey.Size = new System.Drawing.Size(561, 20);
             this.tbDomainKey.TabIndex = 4;
             this.tbDomainKey.Text = "domain.key";
             // 
@@ -598,16 +620,16 @@
             // 
             this.tbAccountKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAccountKey.Location = new System.Drawing.Point(31, 137);
+            this.tbAccountKey.Location = new System.Drawing.Point(31, 36);
             this.tbAccountKey.Name = "tbAccountKey";
-            this.tbAccountKey.Size = new System.Drawing.Size(642, 20);
+            this.tbAccountKey.Size = new System.Drawing.Size(561, 20);
             this.tbAccountKey.TabIndex = 3;
             this.tbAccountKey.Text = "account.key";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(28, 199);
+            this.label11.Location = new System.Drawing.Point(28, 98);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(272, 13);
             this.label11.TabIndex = 2;
@@ -617,21 +639,21 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(28, 160);
+            this.label10.Location = new System.Drawing.Point(28, 59);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(171, 13);
+            this.label10.Size = new System.Drawing.Size(217, 13);
             this.label10.TabIndex = 2;
-            this.label10.Text = "Domain key (usually \"domain.key\")";
+            this.label10.Text = "Name for Domain key (usually \"domain.key\")";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(28, 121);
+            this.label9.Location = new System.Drawing.Point(28, 20);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(180, 13);
+            this.label9.Size = new System.Drawing.Size(226, 13);
             this.label9.TabIndex = 2;
-            this.label9.Text = "Account key (usually \"account.key\")";
+            this.label9.Text = "Name for Account key (usually \"account.key\")";
             // 
             // tabPage1
             // 
@@ -661,6 +683,17 @@
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Create Certificate Signing Request";
+            // 
+            // cbUnlockDomainKey
+            // 
+            this.cbUnlockDomainKey.AutoSize = true;
+            this.cbUnlockDomainKey.Location = new System.Drawing.Point(606, 25);
+            this.cbUnlockDomainKey.Name = "cbUnlockDomainKey";
+            this.cbUnlockDomainKey.Size = new System.Drawing.Size(60, 17);
+            this.cbUnlockDomainKey.TabIndex = 4;
+            this.cbUnlockDomainKey.Text = "Unlock";
+            this.mainToolTip.SetToolTip(this.cbUnlockDomainKey, "Tick to unlock the existing domain key to overwrite. Danger!");
+            this.cbUnlockDomainKey.UseVisualStyleBackColor = true;
             // 
             // lblDomainKeyStatus
             // 
@@ -717,6 +750,18 @@
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Create Account Info";
+            // 
+            // cbUnlockAccountKey
+            // 
+            this.cbUnlockAccountKey.AutoSize = true;
+            this.cbUnlockAccountKey.Location = new System.Drawing.Point(606, 24);
+            this.cbUnlockAccountKey.Name = "cbUnlockAccountKey";
+            this.cbUnlockAccountKey.Size = new System.Drawing.Size(60, 17);
+            this.cbUnlockAccountKey.TabIndex = 1;
+            this.cbUnlockAccountKey.Text = "Unlock";
+            this.mainToolTip.SetToolTip(this.cbUnlockAccountKey, "Tick to unlock the existing account key to overwrite. Danger!");
+            this.cbUnlockAccountKey.UseVisualStyleBackColor = true;
+            this.cbUnlockAccountKey.CheckedChanged += new System.EventHandler(this.cbUnlockAccountKey_CheckedChanged);
             // 
             // lblAccountKeyStatus
             // 
@@ -809,28 +854,38 @@
             this.wbHelpSystem.Size = new System.Drawing.Size(243, 100);
             this.wbHelpSystem.TabIndex = 0;
             // 
-            // cbUnlockAccountKey
+            // groupBox6
             // 
-            this.cbUnlockAccountKey.AutoSize = true;
-            this.cbUnlockAccountKey.Location = new System.Drawing.Point(606, 24);
-            this.cbUnlockAccountKey.Name = "cbUnlockAccountKey";
-            this.cbUnlockAccountKey.Size = new System.Drawing.Size(60, 17);
-            this.cbUnlockAccountKey.TabIndex = 1;
-            this.cbUnlockAccountKey.Text = "Unlock";
-            this.mainToolTip.SetToolTip(this.cbUnlockAccountKey, "Tick to unlock the existing account key to overwrite. Danger!");
-            this.cbUnlockAccountKey.UseVisualStyleBackColor = true;
-            this.cbUnlockAccountKey.CheckedChanged += new System.EventHandler(this.cbUnlockAccountKey_CheckedChanged);
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.tbAccountKey);
+            this.groupBox6.Controls.Add(this.tbDomainKey);
+            this.groupBox6.Controls.Add(this.lnkGetOpenSSLcnfTemplateFile);
+            this.groupBox6.Controls.Add(this.tbOpenSSLCertCreationFile);
+            this.groupBox6.Controls.Add(this.picOKAccountKey);
+            this.groupBox6.Controls.Add(this.picOKDomainKey);
+            this.groupBox6.Controls.Add(this.picOKCertificateCreationFile);
+            this.groupBox6.Location = new System.Drawing.Point(31, 109);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(598, 148);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Files that must exist or will be created in Working Path";
             // 
-            // cbUnlockDomainKey
+            // linkLabel1
             // 
-            this.cbUnlockDomainKey.AutoSize = true;
-            this.cbUnlockDomainKey.Location = new System.Drawing.Point(606, 25);
-            this.cbUnlockDomainKey.Name = "cbUnlockDomainKey";
-            this.cbUnlockDomainKey.Size = new System.Drawing.Size(60, 17);
-            this.cbUnlockDomainKey.TabIndex = 4;
-            this.cbUnlockDomainKey.Text = "Unlock";
-            this.mainToolTip.SetToolTip(this.cbUnlockDomainKey, "Tick to unlock the existing domain key to overwrite. Danger!");
-            this.cbUnlockDomainKey.UseVisualStyleBackColor = true;
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(466, 807);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(68, 13);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "App Website";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // MainForm
             // 
@@ -838,6 +893,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 851);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "gethttpsforfree.com - Helper";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -871,6 +927,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -942,6 +1000,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox cbUnlockDomainKey;
         private System.Windows.Forms.CheckBox cbUnlockAccountKey;
+        private System.Windows.Forms.Button btnBrowsePathOpenSSL;
+        private System.Windows.Forms.Button btnBrowsePathWorkingPath;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
