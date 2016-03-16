@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,11 @@ namespace GetHttpsForFreeUI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // Set the title to include the version number
+            var version = typeof (MainForm).Assembly.GetName().Version;
+            if (version != null)
+                this.Text += $" | v{version}";
+
             ValidateSetupTab();
         }
 
@@ -139,6 +145,10 @@ namespace GetHttpsForFreeUI
 
                 picOpenSSLExecStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
                 lblOpenSSLExecStatus.Text = "Success";
+
+                ShowBalloonTip("Signature created and copied to clipboard",
+                                btnOpenSSLExecute,
+                                1000);
             }
             catch (Exception ex)
             {
@@ -163,9 +173,17 @@ namespace GetHttpsForFreeUI
             {
                 string tmpPath = Path.Combine(tbPath.Text, "files");
             
-                // Create a clean dir
-                if (Directory.Exists(tmpPath))
-                    Directory.Delete(tmpPath, true);
+                // Create a clean dir, if not able to delete then simply continue
+                try
+                {
+                    if (Directory.Exists(tmpPath))
+                        Directory.Delete(tmpPath, true);
+                }
+                catch
+                {
+                    MessageBox.Show(this, "Could not prepare 'files' directory. \nMake sure you close all windows previously opened by \nthis operation then try again.\nPath: " + tmpPath);
+                    return;
+                }
 
                 Directory.CreateDirectory(tmpPath);
 
@@ -181,11 +199,15 @@ namespace GetHttpsForFreeUI
 
                 picVerificationFileStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
                 lblVerificationFileStatus.Text = "Success";
+
+                ShowBalloonTip("Verification file created",
+                                btnCreateVerificationFile,
+                                1000);
             }
             catch (Exception ex)
             {
                 picVerificationFileStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
-                lblVerificationFileStatus.Text = "Error "+ex.Message;
+                lblVerificationFileStatus.Text = ex.Message;
             }
         }
 
@@ -201,17 +223,29 @@ namespace GetHttpsForFreeUI
 
         private void btnCreateCertificateFiles_Click(object sender, EventArgs e)
         {
-            var rootDir = tbPath.Text;
-            string prefix = Path.GetFileName(rootDir);
-            string certFile = Path.Combine(rootDir, prefix + "_cert.crt");
-            string chainFile = Path.Combine(rootDir, prefix + "_chain.crt");
+            try
+            {
+                var rootDir = tbPath.Text;
+                string prefix = Path.GetFileName(rootDir);
+                string certFile = Path.Combine(rootDir, prefix + "_cert.crt");
+                string chainFile = Path.Combine(rootDir, prefix + "_chain.crt");
 
-            CreateFileWithContents(certFile, tbCertSigned.Text.Trim());
-            CreateFileWithContents(chainFile, tbCertIntermediate.Text.Trim()+Environment.NewLine+tbCertRoot.Text.Trim());
+                CreateFileWithContents(certFile, tbCertSigned.Text.Trim());
+                CreateFileWithContents(chainFile, tbCertIntermediate.Text.Trim() + Environment.NewLine + tbCertRoot.Text.Trim());
 
-            Process.Start(rootDir);
+                Process.Start(rootDir);
 
-            ValidateTabPage3();
+                ValidateTabPage3();
+
+                ShowBalloonTip("Certification files created. Congratulations!",
+                    btnCreateCertificateFiles,
+                    1000);
+            }
+            catch (Exception ex)
+            {
+                picCertificateFileStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
+                lblCertificateFileStatus.Text = ex.Message;
+            }
         }
 
         private void tbCertSigned_Click(object sender, EventArgs e)
@@ -226,28 +260,40 @@ namespace GetHttpsForFreeUI
         
         private void btnCreateAccountKey_Click(object sender, EventArgs e)
         {
-            string tmpPath = Path.Combine(tbPath.Text, "tmp");
+            try
+            {
+                string tmpPath = Path.Combine(tbPath.Text, "tmp");
 
-            // Create a clean dir
-            if (!Directory.Exists(tmpPath))
-                Directory.CreateDirectory(tmpPath);
+                // Create a clean dir
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
 
-            string accountKey = Path.Combine(tbPath.Text, tbAccountKey.Text);
-            string openSSLPath = tbOpenSSLPath.Text;
+                string accountKey = Path.Combine(tbPath.Text, tbAccountKey.Text);
+                string openSSLPath = tbOpenSSLPath.Text;
 
 
-            var batFileFullPath = Path.Combine(tmpPath, "run.bat");
-            // Create batch file with contents
-            string winCommand = "\""+ openSSLPath + "\" genrsa 4096 > \"" + accountKey+"\"";
-            CreateFileWithContents(batFileFullPath, winCommand);
-            RunExternalExe(batFileFullPath);
+                var batFileFullPath = Path.Combine(tmpPath, "run.bat");
+                // Create batch file with contents
+                string winCommand = "\"" + openSSLPath + "\" genrsa 4096 > \"" + accountKey + "\"";
+                CreateFileWithContents(batFileFullPath, winCommand);
+                RunExternalExe(batFileFullPath);
 
-            string rawKeyData = GetKeyFileContents(accountKey);
+                string rawKeyData = GetKeyFileContents(accountKey);
 
-            tbAccountKeyContents.Text = rawKeyData;
-            Clipboard.SetText(rawKeyData);
+                tbAccountKeyContents.Text = rawKeyData;
+                Clipboard.SetText(rawKeyData);
 
-            ValidateTabPage1AccountKey();
+                ValidateTabPage1AccountKey();
+
+                ShowBalloonTip("Account key created and copied to clipboard",
+                    btnCreateAccountKey,
+                    1000);
+            }
+            catch (Exception ex)
+            {
+                picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
+                lblAccountKeyStatus.Text = ex.Message;
+            }
         }
 
         private void tbAccountKeyContents_Click(object sender, EventArgs e)
@@ -262,28 +308,40 @@ namespace GetHttpsForFreeUI
 
         private void btnCreateDomainKey_Click(object sender, EventArgs e)
         {
-            string tmpPath = Path.Combine(tbPath.Text, "tmp");
+            try
+            {
+                string tmpPath = Path.Combine(tbPath.Text, "tmp");
 
-            // Create a clean dir
-            if (!Directory.Exists(tmpPath))
-                Directory.CreateDirectory(tmpPath);
+                // Create a clean dir
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
 
-            string domainKey = Path.Combine(tbPath.Text, tbDomainKey.Text);
-            string certSignFile = Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text);
-            string openSSLPath = tbOpenSSLPath.Text;
+                string domainKey = Path.Combine(tbPath.Text, tbDomainKey.Text);
+                string certSignFile = Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text);
+                string openSSLPath = tbOpenSSLPath.Text;
 
 
-            var batFileFullPath = Path.Combine(tmpPath, "run.bat");
-            // Create batch file with contents
-            string winCommand = "\"" + openSSLPath + "\" genrsa 4096 > \"" + domainKey + "\"";
-            CreateFileWithContents(batFileFullPath, winCommand);
-            RunExternalExe(batFileFullPath);
+                var batFileFullPath = Path.Combine(tmpPath, "run.bat");
+                // Create batch file with contents
+                string winCommand = "\"" + openSSLPath + "\" genrsa 4096 > \"" + domainKey + "\"";
+                CreateFileWithContents(batFileFullPath, winCommand);
+                RunExternalExe(batFileFullPath);
 
-            string rawCertData = GetCertificateSigningRequest(domainKey, certSignFile);
-            tbCertSigningRequestContents.Text = rawCertData;
-            Clipboard.SetText(rawCertData);
+                string rawCertData = GetCertificateSigningRequest(domainKey, certSignFile);
+                tbCertSigningRequestContents.Text = rawCertData;
+                Clipboard.SetText(rawCertData);
 
-            ValidateTabPage1DomainKey();
+                ValidateTabPage1DomainKey();
+
+                ShowBalloonTip("Domain key created and copied to clipboard",
+                    btnCreateDomainKey,
+                    1000);
+            }
+            catch (Exception ex)
+            {
+                picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Error);
+                lblDomainKeyStatus.Text = ex.Message;
+            }
         }
 
         private string GetCertificateSigningRequest(string keyFilePath, string certSignFilePath)
@@ -411,7 +469,7 @@ namespace GetHttpsForFreeUI
             if (File.Exists(accountKeyPath))
             {
                 picAccountKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
-                lblAccountKeyStatus.Text = $"Account key '{accountKeyPath}' already exists";
+                lblAccountKeyStatus.Text = $"Account key '{accountKeyPath}' available";
                 btnCreateAccountKey.Enabled = false;
 
                 // Print the key in the box
@@ -437,7 +495,7 @@ namespace GetHttpsForFreeUI
             if (File.Exists(domainKeyPath) && File.Exists(certSignFile))
             {
                 picDomainKeyStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
-                lblDomainKeyStatus.Text = $"Domain key '{domainKeyPath}' already exists";
+                lblDomainKeyStatus.Text = $"Domain key '{domainKeyPath}' available";
                 btnCreateDomainKey.Enabled = false;
 
                 // Print the key in the box                
@@ -469,12 +527,12 @@ namespace GetHttpsForFreeUI
             string chainFile = Path.Combine(rootDir, prefix + "_chain.crt");
 
 
-            picAccountKeyStatus.Image = null;
-            lblAccountKeyStatus.Text = null;
+            picCertificateFileStatus.Image = null;
+            lblCertificateFileStatus.Text = null;
             if (File.Exists(certFile) && File.Exists(chainFile))
             {
                 picCertificateFileStatus.Image = ResourceStream.GetImage(ResourceStream.Ok);
-                lblCertificateFileStatus.Text = $"Chain and Cert files both exist at '{rootDir}'";
+                lblCertificateFileStatus.Text = $"Chain and Cert files both available at '{rootDir}'";
             }
             else
             {
@@ -492,6 +550,7 @@ namespace GetHttpsForFreeUI
         {
             picOpenSSLExecStatus.Image = null;
             lblOpenSSLExecStatus.Text = null;
+            tbOpenSSLResults.Text = string.Empty;
         }
 
         private void tbFileServerPath_TextChanged(object sender, EventArgs e)
@@ -565,11 +624,13 @@ namespace GetHttpsForFreeUI
         private void btnBrowsePathOpenSSL_Click(object sender, EventArgs e)
         {
             ShowBrowseFileDialog(tbOpenSSLPath, "openssl.exe");
+            ValidateSetupTab();
         }
 
         private void btnBrowsePathWorkingPath_Click(object sender, EventArgs e)
         {
             ShowBrowsePathDialog(tbPath);
+            ValidateSetupTab();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -594,6 +655,50 @@ namespace GetHttpsForFreeUI
         private void tbPath_Leave(object sender, EventArgs e)
         {
             ValidateSetupTab();
+        }
+
+        private void tbOpenSSLCertCreationFile_Leave(object sender, EventArgs e)
+        {
+            ValidateSetupTab();
+        }
+
+        private void lnkCopyRequiredSSLCertDataToClipboard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(@"####################################################################
+# Replace example.com with your own domain.
+# Ensure you add all subdomains you indend to secure with this same certificate. 
+[SAN]
+subjectAltName=DNS:example.com,DNS:www.example.com,DNS:subdomain.example.com");
+
+            ShowBalloonTip("Text copied to clipboard",
+                lnkCopyRequiredSSLCertDataToClipboard,
+                1000);
+        }
+
+        private void lnkOpenCertfileForEditing_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var path = Path.Combine(tbPath.Text, tbOpenSSLCertCreationFile.Text);
+            if (!File.Exists(path))
+            {
+                ShowBalloonTip("File does not exist",
+                                lnkOpenCertfileForEditing,
+                                1000);
+                return;
+            }
+
+            Process.Start(path);
+        }
+
+        private void ShowBalloonTip(string text, Control control, int durationMsec)
+        {
+            // Get around tooltip error by showing once empty for the control
+            confirmToolTip.Show(string.Empty, control, 0);
+
+            // Now for the real tooltip
+            confirmToolTip.Show(text,
+                                control,
+                                new Point(1, control.Height+2),
+                                durationMsec);
         }
     }
 }

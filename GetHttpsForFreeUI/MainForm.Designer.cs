@@ -82,6 +82,7 @@
             this.btnShowHelp = new System.Windows.Forms.Button();
             this.picOKWorkingPath = new System.Windows.Forms.PictureBox();
             this.picOKOpenSSL = new System.Windows.Forms.PictureBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbUnlockDomainKey = new System.Windows.Forms.CheckBox();
@@ -100,7 +101,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.wbHelpSystem = new System.Windows.Forms.WebBrowser();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label12 = new System.Windows.Forms.Label();
+            this.lnkOpenCertfileForEditing = new System.Windows.Forms.LinkLabel();
+            this.lnkCopyRequiredSSLCertDataToClipboard = new System.Windows.Forms.LinkLabel();
+            this.confirmToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenSSLExecStatus)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -153,6 +156,7 @@
             // lblPath
             // 
             this.lblPath.AutoSize = true;
+            this.lblPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPath.Location = new System.Drawing.Point(28, 66);
             this.lblPath.Name = "lblPath";
             this.lblPath.Size = new System.Drawing.Size(210, 13);
@@ -250,7 +254,7 @@
             this.groupBox2.Size = new System.Drawing.Size(675, 160);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Create Verification Files";
+            this.groupBox2.Text = "Create Verification Files (Step 4 only)";
             // 
             // lnkVerifyDomainVerificationFilesOnServer
             // 
@@ -343,6 +347,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(28, 24);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 13);
@@ -356,7 +361,7 @@
             this.tbCertSigned.Multiline = true;
             this.tbCertSigned.Name = "tbCertSigned";
             this.tbCertSigned.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbCertSigned.Size = new System.Drawing.Size(493, 446);
+            this.tbCertSigned.Size = new System.Drawing.Size(493, 359);
             this.tbCertSigned.TabIndex = 0;
             this.tbCertSigned.WordWrap = false;
             this.tbCertSigned.Click += new System.EventHandler(this.tbCertSigned_Click);
@@ -413,11 +418,11 @@
             this.tbCertIntermediate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tbCertIntermediate.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCertIntermediate.Location = new System.Drawing.Point(9, 497);
+            this.tbCertIntermediate.Location = new System.Drawing.Point(9, 410);
             this.tbCertIntermediate.Multiline = true;
             this.tbCertIntermediate.Name = "tbCertIntermediate";
             this.tbCertIntermediate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbCertIntermediate.Size = new System.Drawing.Size(493, 287);
+            this.tbCertIntermediate.Size = new System.Drawing.Size(493, 374);
             this.tbCertIntermediate.TabIndex = 1;
             this.tbCertIntermediate.WordWrap = false;
             this.tbCertIntermediate.Click += new System.EventHandler(this.tbCertIntermediate_Click);
@@ -425,7 +430,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 481);
+            this.label7.Location = new System.Drawing.Point(6, 394);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(115, 13);
             this.label7.TabIndex = 3;
@@ -484,6 +489,8 @@
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.lnkCopyRequiredSSLCertDataToClipboard);
+            this.groupBox6.Controls.Add(this.lnkOpenCertfileForEditing);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.label11);
@@ -494,9 +501,9 @@
             this.groupBox6.Controls.Add(this.picOKAccountKey);
             this.groupBox6.Controls.Add(this.picOKDomainKey);
             this.groupBox6.Controls.Add(this.picOKCertificateCreationFile);
-            this.groupBox6.Location = new System.Drawing.Point(31, 109);
+            this.groupBox6.Location = new System.Drawing.Point(31, 115);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(598, 148);
+            this.groupBox6.Size = new System.Drawing.Size(598, 162);
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Files that must exist or will be created in Working Path";
@@ -568,6 +575,7 @@
             this.tbOpenSSLCertCreationFile.Size = new System.Drawing.Size(561, 20);
             this.tbOpenSSLCertCreationFile.TabIndex = 6;
             this.tbOpenSSLCertCreationFile.Text = "openssl.cnf";
+            this.tbOpenSSLCertCreationFile.Leave += new System.EventHandler(this.tbOpenSSLCertCreationFile_Leave);
             // 
             // picOKAccountKey
             // 
@@ -618,28 +626,32 @@
             // tbCertRoot
             // 
             this.tbCertRoot.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCertRoot.Location = new System.Drawing.Point(31, 285);
+            this.tbCertRoot.Location = new System.Drawing.Point(31, 311);
             this.tbCertRoot.Multiline = true;
             this.tbCertRoot.Name = "tbCertRoot";
             this.tbCertRoot.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbCertRoot.Size = new System.Drawing.Size(483, 445);
             this.tbCertRoot.TabIndex = 7;
             this.tbCertRoot.Text = resources.GetString("tbCertRoot.Text");
+            this.mainToolTip.SetToolTip(this.tbCertRoot, "The Let\'s Encrypt Root key, don\'t change this data unless you know what you\'re do" +
+        "ing");
+            this.tbCertRoot.Visible = false;
             this.tbCertRoot.WordWrap = false;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 269);
+            this.label8.Location = new System.Drawing.Point(28, 295);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(139, 13);
             this.label8.TabIndex = 8;
             this.label8.Text = "LetsEncrypt Root Certificate";
+            this.label8.Visible = false;
             // 
             // lnkGetOpenSSL
             // 
             this.lnkGetOpenSSL.AutoSize = true;
-            this.lnkGetOpenSSL.Location = new System.Drawing.Point(113, 24);
+            this.lnkGetOpenSSL.Location = new System.Drawing.Point(105, 24);
             this.lnkGetOpenSSL.Name = "lnkGetOpenSSL";
             this.lnkGetOpenSSL.Size = new System.Drawing.Size(135, 13);
             this.lnkGetOpenSSL.TabIndex = 0;
@@ -698,6 +710,16 @@
             this.picOKOpenSSL.Size = new System.Drawing.Size(16, 16);
             this.picOKOpenSSL.TabIndex = 3;
             this.picOKOpenSSL.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(238, 24);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(230, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "(if unsure, try the indy.fulgan.com latest version)";
             // 
             // tabPage1
             // 
@@ -899,15 +921,38 @@
             this.wbHelpSystem.Size = new System.Drawing.Size(243, 100);
             this.wbHelpSystem.TabIndex = 0;
             // 
-            // label12
+            // lnkOpenCertfileForEditing
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(244, 24);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(184, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "(try the indy.fulgan.com latest version)";
+            this.lnkOpenCertfileForEditing.AutoSize = true;
+            this.lnkOpenCertfileForEditing.Location = new System.Drawing.Point(190, 141);
+            this.lnkOpenCertfileForEditing.Name = "lnkOpenCertfileForEditing";
+            this.lnkOpenCertfileForEditing.Size = new System.Drawing.Size(91, 13);
+            this.lnkOpenCertfileForEditing.TabIndex = 7;
+            this.lnkOpenCertfileForEditing.TabStop = true;
+            this.lnkOpenCertfileForEditing.Text = "Open for editing...";
+            this.mainToolTip.SetToolTip(this.lnkOpenCertfileForEditing, "Opens the OpenSSL.cnf file (if available) for editing. Make your edits at the end" +
+        " of the file.");
+            this.lnkOpenCertfileForEditing.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenCertfileForEditing_LinkClicked);
+            // 
+            // lnkCopyRequiredSSLCertDataToClipboard
+            // 
+            this.lnkCopyRequiredSSLCertDataToClipboard.AutoSize = true;
+            this.lnkCopyRequiredSSLCertDataToClipboard.Location = new System.Drawing.Point(28, 141);
+            this.lnkCopyRequiredSSLCertDataToClipboard.Name = "lnkCopyRequiredSSLCertDataToClipboard";
+            this.lnkCopyRequiredSSLCertDataToClipboard.Size = new System.Drawing.Size(156, 13);
+            this.lnkCopyRequiredSSLCertDataToClipboard.TabIndex = 7;
+            this.lnkCopyRequiredSSLCertDataToClipboard.TabStop = true;
+            this.lnkCopyRequiredSSLCertDataToClipboard.Text = "Copy required entry to clipboard";
+            this.mainToolTip.SetToolTip(this.lnkCopyRequiredSSLCertDataToClipboard, "Copies the necessary OpenSSL.cnf configuration to clipboard  so that you can past" +
+        "e it at the end of the file");
+            this.lnkCopyRequiredSSLCertDataToClipboard.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyRequiredSSLCertDataToClipboard_LinkClicked);
+            // 
+            // confirmToolTip
+            // 
+            this.confirmToolTip.AutoPopDelay = 5000;
+            this.confirmToolTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.confirmToolTip.InitialDelay = 500;
+            this.confirmToolTip.ReshowDelay = 0;
             // 
             // MainForm
             // 
@@ -1028,6 +1073,9 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel lnkVerifyDomainVerificationFilesOnServer;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.LinkLabel lnkCopyRequiredSSLCertDataToClipboard;
+        private System.Windows.Forms.LinkLabel lnkOpenCertfileForEditing;
+        private System.Windows.Forms.ToolTip confirmToolTip;
     }
 }
 
