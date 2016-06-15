@@ -425,6 +425,12 @@ namespace GetHttpsForFreeUI
             lblOpenSSLExecStatus.Text = null;
             picVerificationFileStatus.Image = null;
             lblVerificationFileStatus.Text = null;
+
+            // Clear out any text in text boxes on this sheet
+            tbOpenSSLData.Text = "";
+            tbOpenSSLResults.Text = "";
+            tbFileServerPath.Text = "";
+            tbFileContents.Text = "";
         }
 
         private void ValidateSetupTab()

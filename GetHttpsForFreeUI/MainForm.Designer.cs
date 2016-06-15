@@ -62,6 +62,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSetup = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lnkCopyRequiredSSLCertDataToClipboard = new System.Windows.Forms.LinkLabel();
+            this.lnkOpenCertfileForEditing = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -101,8 +103,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.wbHelpSystem = new System.Windows.Forms.WebBrowser();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.lnkOpenCertfileForEditing = new System.Windows.Forms.LinkLabel();
-            this.lnkCopyRequiredSSLCertDataToClipboard = new System.Windows.Forms.LinkLabel();
             this.confirmToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOpenSSLExecStatus)).BeginInit();
@@ -298,9 +298,9 @@
             // 
             this.tbFileContents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFileContents.Location = new System.Drawing.Point(9, 80);
+            this.tbFileContents.Location = new System.Drawing.Point(6, 80);
             this.tbFileContents.Name = "tbFileContents";
-            this.tbFileContents.Size = new System.Drawing.Size(660, 20);
+            this.tbFileContents.Size = new System.Drawing.Size(664, 20);
             this.tbFileContents.TabIndex = 4;
             this.tbFileContents.Click += new System.EventHandler(this.tbFileContents_Click);
             this.tbFileContents.TextChanged += new System.EventHandler(this.tbFileServerPath_TextChanged);
@@ -309,7 +309,7 @@
             // 
             this.tbFileServerPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFileServerPath.Location = new System.Drawing.Point(5, 41);
+            this.tbFileServerPath.Location = new System.Drawing.Point(6, 41);
             this.tbFileServerPath.Name = "tbFileServerPath";
             this.tbFileServerPath.Size = new System.Drawing.Size(664, 20);
             this.tbFileServerPath.TabIndex = 3;
@@ -507,6 +507,32 @@
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Files that must exist or will be created in Working Path";
+            // 
+            // lnkCopyRequiredSSLCertDataToClipboard
+            // 
+            this.lnkCopyRequiredSSLCertDataToClipboard.AutoSize = true;
+            this.lnkCopyRequiredSSLCertDataToClipboard.Location = new System.Drawing.Point(28, 141);
+            this.lnkCopyRequiredSSLCertDataToClipboard.Name = "lnkCopyRequiredSSLCertDataToClipboard";
+            this.lnkCopyRequiredSSLCertDataToClipboard.Size = new System.Drawing.Size(156, 13);
+            this.lnkCopyRequiredSSLCertDataToClipboard.TabIndex = 7;
+            this.lnkCopyRequiredSSLCertDataToClipboard.TabStop = true;
+            this.lnkCopyRequiredSSLCertDataToClipboard.Text = "Copy required entry to clipboard";
+            this.mainToolTip.SetToolTip(this.lnkCopyRequiredSSLCertDataToClipboard, "Copies the necessary OpenSSL.cnf configuration to clipboard  so that you can past" +
+        "e it at the end of the file");
+            this.lnkCopyRequiredSSLCertDataToClipboard.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyRequiredSSLCertDataToClipboard_LinkClicked);
+            // 
+            // lnkOpenCertfileForEditing
+            // 
+            this.lnkOpenCertfileForEditing.AutoSize = true;
+            this.lnkOpenCertfileForEditing.Location = new System.Drawing.Point(190, 141);
+            this.lnkOpenCertfileForEditing.Name = "lnkOpenCertfileForEditing";
+            this.lnkOpenCertfileForEditing.Size = new System.Drawing.Size(91, 13);
+            this.lnkOpenCertfileForEditing.TabIndex = 7;
+            this.lnkOpenCertfileForEditing.TabStop = true;
+            this.lnkOpenCertfileForEditing.Text = "Open for editing...";
+            this.mainToolTip.SetToolTip(this.lnkOpenCertfileForEditing, "Opens the OpenSSL.cnf file (if available) for editing. Make your edits at the end" +
+        " of the file.");
+            this.lnkOpenCertfileForEditing.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenCertfileForEditing_LinkClicked);
             // 
             // label9
             // 
@@ -920,32 +946,6 @@
             this.wbHelpSystem.Name = "wbHelpSystem";
             this.wbHelpSystem.Size = new System.Drawing.Size(243, 100);
             this.wbHelpSystem.TabIndex = 0;
-            // 
-            // lnkOpenCertfileForEditing
-            // 
-            this.lnkOpenCertfileForEditing.AutoSize = true;
-            this.lnkOpenCertfileForEditing.Location = new System.Drawing.Point(190, 141);
-            this.lnkOpenCertfileForEditing.Name = "lnkOpenCertfileForEditing";
-            this.lnkOpenCertfileForEditing.Size = new System.Drawing.Size(91, 13);
-            this.lnkOpenCertfileForEditing.TabIndex = 7;
-            this.lnkOpenCertfileForEditing.TabStop = true;
-            this.lnkOpenCertfileForEditing.Text = "Open for editing...";
-            this.mainToolTip.SetToolTip(this.lnkOpenCertfileForEditing, "Opens the OpenSSL.cnf file (if available) for editing. Make your edits at the end" +
-        " of the file.");
-            this.lnkOpenCertfileForEditing.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenCertfileForEditing_LinkClicked);
-            // 
-            // lnkCopyRequiredSSLCertDataToClipboard
-            // 
-            this.lnkCopyRequiredSSLCertDataToClipboard.AutoSize = true;
-            this.lnkCopyRequiredSSLCertDataToClipboard.Location = new System.Drawing.Point(28, 141);
-            this.lnkCopyRequiredSSLCertDataToClipboard.Name = "lnkCopyRequiredSSLCertDataToClipboard";
-            this.lnkCopyRequiredSSLCertDataToClipboard.Size = new System.Drawing.Size(156, 13);
-            this.lnkCopyRequiredSSLCertDataToClipboard.TabIndex = 7;
-            this.lnkCopyRequiredSSLCertDataToClipboard.TabStop = true;
-            this.lnkCopyRequiredSSLCertDataToClipboard.Text = "Copy required entry to clipboard";
-            this.mainToolTip.SetToolTip(this.lnkCopyRequiredSSLCertDataToClipboard, "Copies the necessary OpenSSL.cnf configuration to clipboard  so that you can past" +
-        "e it at the end of the file");
-            this.lnkCopyRequiredSSLCertDataToClipboard.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopyRequiredSSLCertDataToClipboard_LinkClicked);
             // 
             // confirmToolTip
             // 
