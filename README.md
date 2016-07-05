@@ -10,3 +10,7 @@ Here is a <a href="https://youtu.be/CzbZKrYo7HA" target="_blank">youtube demonst
 # How do I get it?
 Download the exe directly fromn the release folder. 
 It is that simple.
+
+<p align="center">
+  <a href="https://www.paypal.me/sverrirs/1.5" target="_blank"><img border="0" src="https://www.paypalobjects.com/en_US/i/btn/x-click-but21.gif" alt="Like my work? You can donate to this project using PayPal" title="Like my work? You can donate to this project using PayPal"></a>
+</p>
