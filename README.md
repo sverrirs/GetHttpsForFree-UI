@@ -1,6 +1,6 @@
 # What is it?
 This is a .NET Windows application to semi-automate creating a SSL certificate using the gethttpsforfree.com website. 
-The application is open-source and you're more than welcome to take a peak. 
+The application is open-source and you're more than welcome to take a peek. 
 
 _I must warn you though, it was created very quickly and the code is quite "WinForms"-ie ;)_
 
